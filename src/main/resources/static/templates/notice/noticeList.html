@@ -19,9 +19,24 @@
 <div class="divTable minimalistBlack">
     <div class="divTableHeading">
         <div class="divTableRow">
-
+            <div class="divTableHead">순번</div>
+            <div class="divTableHead">제목</div>
+            <div class="divTableHead">조회수</div>
+            <div class="divTableHead">등록자</div>
+            <div class="divTableHead">등록일</div>
+        </div>
+    </div>
+    <div class="divTableBody">
+        <div class="divTableRow" th:each="dot: ${rList}">
+            <div class="divTableCell" th:if="${dto.noticeYn=='Y'}" th:text="공지사항"></div>
+            <div class="divTableCell" th:unless="${dto.noticeYn=='N'}" th:text="${dto.noticeSeq}"></div>
+            <div class="divTableCell" th:text="${dto.title}" th:onclick="doDetail([[${dto.noticeSeq}]])"></div>
+            <div class="divTableCell" th:text="${dto.readCnt}"></div>
+            <div class="divTableCell" th:text="${dto.userName}"></div>
+            <div class="divTableCell" th:text="${dto.regDt}"></div>
         </div>
     </div>
 </div>
+<a href="notice/noticeReg">[글쓰기]</a>
 </body>
 </html>
