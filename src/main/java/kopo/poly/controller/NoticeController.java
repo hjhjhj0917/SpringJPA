@@ -52,7 +52,7 @@ public class NoticeController {
     }
 
     @ResponseBody
-    @GetMapping(value = "noticeInsert")
+    @PostMapping(value = "noticeInsert")
     public MsgDTO noticeInsert(HttpServletRequest request, HttpSession session) {
 
         log.info("{}.noticeInsert Start!", this.getClass().getName());
