@@ -14,6 +14,7 @@ public record NoticeDTO(
         String regDt,
         String chgId,
         String chgDt,
-        String userName
+        String userName,
+        Integer version
 ) {
 }

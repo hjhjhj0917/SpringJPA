@@ -12,6 +12,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @DynamicUpdate
 @Builder
+@Cacheable
 @Entity
 public class NoticeEntity {
 
@@ -36,23 +37,22 @@ public class NoticeEntity {
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @NonNull
     @Column(name = "read_cnt", nullable = false)
     private Long readCnt;
 
-    @NonNull
     @Column(name = "reg_id", updatable = false)
     private String regId;
 
-    @NonNull
     @Column(name = "reg_dt", updatable = false)
     private String regDt;
 
-    @NonNull
     @Column(name = "chg_id")
     private String chgId;
 
-    @NonNull
     @Column(name = "chg_dt")
     private String chgDt;
+
+    @Version
+    @Column(name = "version", nullable = false)
+    private Integer version = 0;
 }

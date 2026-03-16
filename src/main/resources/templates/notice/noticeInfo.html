@@ -5,7 +5,7 @@
     <title>게시판 글보기</title>
     <link rel="stylesheet" href="/css/table.css">
     <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
+    <script th:inline="javascript">
         const session_user_id = [[${session.SESSION_USER_ID}]];
         const user_id = [[${rDTO.userId}]];
         const nSeq = [[${rDTO.noticeSeq}]];
@@ -17,7 +17,7 @@
             $("#btnDelete").on("click", function () {
                 doDelete();
             })
-            $("#btnDelete").on("click", function () {
+            $("#btnList").on("click", function () {
                 location.href = "/notice/noticeList";
             })
         })

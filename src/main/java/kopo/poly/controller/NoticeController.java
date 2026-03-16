@@ -101,6 +101,8 @@ public class NoticeController {
 
         NoticeDTO rDTO = Optional.ofNullable(noticeService.getNoticeInfo(pDTO, true)).orElseGet(() -> NoticeDTO.builder().build());
 
+        model.addAttribute("rDTO", rDTO);
+
         log.info("{}.noticeInfo End!", this.getClass().getName());
 
         return "notice/noticeInfo";
@@ -128,7 +130,7 @@ public class NoticeController {
     }
 
     @ResponseBody
-    @GetMapping(value = "noticeUpdate")
+    @PostMapping(value = "noticeUpdate")
     public MsgDTO noticeUpdate(HttpSession session, HttpServletRequest request) {
 
         log.info("{}.noticeUpdate Start!", this.getClass().getName());
