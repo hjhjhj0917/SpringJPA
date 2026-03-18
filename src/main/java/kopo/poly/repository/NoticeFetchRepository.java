@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface NoticeFetchRepository extends JpaRepository<NoticeFetchEntity, Long> {
+public interface NoticeFetchRepository extends JpaRepository<NoticeJoinEntity, Long> {
 
     @Query("SELECT A FROM NoticeFetchEntity A JOIN FETCH A.userInfo ORDER BY A.noticeYn desc, A.noticeSeq DESC")
     List<NoticeFetchEntity> getListFetchJoin();
