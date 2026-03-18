@@ -53,4 +53,20 @@ public class NoticeJoinController {
 
         return "notice/noticeListJoin";
     }
+
+    @GetMapping(value = "noticeListUsingJPQL")
+    public String noticeListUsingJPQL(HttpSession session, ModelMap model) throws Exception {
+
+        log.info("{}.noticeListUsingJPQL Start!", this.getClass().getName());
+
+        session.setAttribute("SESSION_USER_ID", "USER01");
+
+        List<NoticeDTO> rList = Optional.ofNullable(noticeJoinService.getNoticeListUsingJPQL()).orElseGet(ArrayList::new);
+
+        model.addAttribute("rList", rList);
+
+        log.info("{}.noticeListUsingJPQL End!", this.getClass().getName());
+
+        return "notice/noticeListJoin";
+    }
 }

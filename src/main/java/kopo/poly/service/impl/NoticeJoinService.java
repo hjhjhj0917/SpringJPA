@@ -3,8 +3,10 @@ package kopo.poly.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kopo.poly.dto.NoticeDTO;
+import kopo.poly.repository.NoticeFetchRepository;
 import kopo.poly.repository.NoticeJoinRepository;
 import kopo.poly.repository.NoticeSQLRepository;
+import kopo.poly.repository.entity.NoticeFetchEntity;
 import kopo.poly.repository.entity.NoticeJoinEntity;
 import kopo.poly.repository.entity.NoticeSQLEntity;
 import kopo.poly.service.INoticeJoinService;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ public class NoticeJoinService implements INoticeJoinService {
 
     private final NoticeJoinRepository noticeJoinRepository;
     private final NoticeSQLRepository noticeSQLRepository;
+    private final NoticeFetchRepository noticeFetchRepository;
 
     @Override
     public List<NoticeDTO> getNoticeListUsingJoinColumn() {
@@ -73,6 +77,29 @@ public class NoticeJoinService implements INoticeJoinService {
                 });
 
         log.info("{}.getNoticeListUsingNativeQuery End!", this.getClass().getName());
+
+        return nList;
+    }
+
+    @Override
+    public List<NoticeDTO> getNoticeListUsingJPQL() {
+
+        log.info("{}.getNoticeListUsingJPQL Start!", this.getClass().getName());
+
+        List<NoticeFetchEntity> rList = noticeFetchRepository.getListFetchJoin();
+
+        List<NoticeDTO> nList = new ArrayList<>();
+
+        rList.forEach(e -> {
+            NoticeDTO rDTO = NoticeDTO.builder()
+                    .noticeSeq(e.getNoticeSeq()).title(e.getTitle()).noticeYn(e.getNoticeYn())
+                    .readCnt(e.getReadCnt()).userId(e.getUserId())
+                    .userName(e.getUserInfo().getUserName()).build();
+
+            nList.add(rDTO);
+        });
+
+        log.info("{}.getNoticeListUsingJPQL End!", this.getClass().getName());
 
         return nList;
     }

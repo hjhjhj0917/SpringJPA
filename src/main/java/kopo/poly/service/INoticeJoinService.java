@@ -9,4 +9,6 @@ public interface INoticeJoinService {
     List<NoticeDTO> getNoticeListUsingJoinColumn();
 
     List<NoticeDTO> getNoticeListUsingNativeQuery();
+
+    List<NoticeDTO> getNoticeListUsingJPQL();
 }
