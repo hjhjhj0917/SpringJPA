@@ -9,7 +9,7 @@ public record NoticeDTO(
         String noticeYn,
         String contents,
         String userId,
-        String readCnt,
+        Long readCnt,
         String regId,
         String regDt,
         String chgId,

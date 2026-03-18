@@ -30,7 +30,7 @@ public class NoticeController {
 
         log.info("{}.noticeList Start!", this.getClass().getName());
 
-        session.setAttribute("SESSION_USER_ID", "USER01");
+        session.setAttribute("SESSION_USER_ID", "USER03");
 
         List<NoticeDTO> rList = Optional.ofNullable(noticeService.getNoticeList()).orElseGet(ArrayList::new);
 
