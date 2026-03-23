@@ -11,4 +11,8 @@ public interface INoticeJoinService {
     List<NoticeDTO> getNoticeListUsingNativeQuery();
 
     List<NoticeDTO> getNoticeListUsingJPQL();
+
+    List<NoticeDTO> getNoticeListForQueryDSL();
+
+    NoticeDTO getNOticeInfoForQueryDSL(NoticeDTO pDTO, boolean type) throws Exception;
 }
