@@ -42,17 +42,17 @@ public class UserInfoEntity implements Serializable {
     private String addr2;
 
     @Column(name = "reg_id", nullable = false)
-    private String reg_id;
+    private String regId;
 
     @Column(name = "reg_dt", nullable = false)
-    private String reg_dt;
+    private String regDt;
 
     @Column(name = "chg_id")
-    private String chg_id;
+    private String chgId;
 
     @Column(name = "chg_dt")
-    private String chg_dt;
+    private String chgDt;
 
-    @Column(name = "roles", nullable = false)
+    @Column(name = "roles")
     private String roles;
 }
