@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MongoDB 데이터 저장하기 테스트</title>
+    <link rel="stylesheet" href="/css/table.css">
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.serializeObject.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#btnSend").on("click", function () {
+
+                $.ajax({
+                    url: "/mongo/v1/basic",
+                    type: "post",
+                    contentType: "application/json",
+                    dataType: "JSON",
+                    data: JSON.stringify($("#f").serializeObject())
+                }).then(
+                    function (json) {
+                        console.log(json)
+                        alert(json.data.msg);
+                    }
+                )
+            })
+        })
+    </script>
+</head>
+<body>
+<form name="f" id="f">
+    <div class="divTable minimalistBlack">
+        <div class="divTableBody">
+            <div class="divTableRow">
+                <div class="divTableCell">이름</div>
+                <div class="divTableCell">
+                    <input type="text" name="userName" maxlength="100" style="width: 95%">
+                </div>
+            </div>
+            <div class="divTableRow">
+                <div class="divTableCell">주소</div>
+                <div class="divTableCell">
+                    <input type="text" name="addr" maxlength="100" style="width: 95%">
+                </div>
+            </div>
+            <div class="divTableRow">
+                <div class="divTableCell">이메일</div>
+                <div class="divTableCell">
+                    <input type="text" name="email" maxlength="100" style="width: 95%;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button id="btnSend" type="button">MongoDB 저장 테스트</button>
+    </div>
+</form>
+</body>
+</html>

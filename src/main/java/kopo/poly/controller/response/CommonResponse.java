@@ -26,9 +26,10 @@ public class CommonResponse<T> {
         return new CommonResponse<>(httpStatus, message, data);
     }
 
-    public static ResponseEntity<CommonResponse> getErrors(BindingResult bindingResult) {
+    public static ResponseEntity<CommonResponse<?>> getErrors(BindingResult bindingResult) {
         return ResponseEntity.badRequest()
-                .body(CommonResponse.of(HttpStatus.BAD_REQUEST,
+                .body(CommonResponse.of(
+                        HttpStatus.BAD_REQUEST,
                         HttpStatus.BAD_REQUEST.series().name(),
                         bindingResult.getAllErrors()));
     }
