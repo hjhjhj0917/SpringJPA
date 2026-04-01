@@ -101,4 +101,22 @@ public class MelonService implements IMelonService {
 
         return rList;
     }
+
+    @Override
+    public List<MelonDTO> getSingerSong(MelonDTO pDTO) throws Exception {
+
+        log.info("{}.getSingerSong Start!", this.getClass().getName());
+
+        String colNm = "MELON_" + DateUtil.getDateTime("yyyyMMdd");
+
+        List<MelonDTO> rList = null;
+
+        if (this.collectMelonSong() == 1) {
+            rList = melonMapper.getSingerSong(colNm, pDTO);
+        }
+
+        log.info("{}.getSingerSong End!", this.getClass().getName());
+
+        return rList;
+    }
 }

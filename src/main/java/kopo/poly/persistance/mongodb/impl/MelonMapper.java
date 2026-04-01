@@ -135,4 +135,37 @@ public class MelonMapper extends AbstractMongoDBComon implements IMelonMapper {
 
         return rList;
     }
+
+    @Override
+    public List<MelonDTO> getSingerSong(String colNm, MelonDTO pDTO) throws Exception {
+
+        log.info("{}.getSingerSong Start!", this.getClass().getName());
+
+        List<MelonDTO> rList = new LinkedList<>();
+
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
+
+        Document query = new Document();
+        query.append("singer", CmmUtil.nvl(pDTO.singer()));
+
+        Document projection = new Document();
+        projection.append("song", "$song");
+        projection.append("singer", "$singer");
+        projection.append("_id", 0);
+
+        FindIterable<Document> rs = col.find(query).projection(projection);
+
+        for (Document doc : rs) {
+            String song = CmmUtil.nvl(doc.getString("song"));
+            String singer = CmmUtil.nvl(doc.getString("singer"));
+
+            MelonDTO rDTO = MelonDTO.builder().song(song).singer(singer).build();
+
+            rList.add(rDTO);
+        }
+
+        log.info("{}.getSingerSong End!", this.getClass().getName());
+
+        return rList;
+    }
 }

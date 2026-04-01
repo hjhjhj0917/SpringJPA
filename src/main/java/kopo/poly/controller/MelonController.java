@@ -10,6 +10,7 @@ import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -71,6 +72,22 @@ public class MelonController {
         List<MelonDTO> rList = Optional.ofNullable(melonService.getSingerSongCnt()).orElseGet(ArrayList::new);
 
         log.info("{}.getSingerSongCnt End!", this.getClass().getName());
+
+        return ResponseEntity.ok(
+                CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
+        );
+    }
+
+    @PostMapping(value = "getSingerSong")
+    public ResponseEntity<CommonResponse<List<MelonDTO>>> getSingerSong(@RequestBody MelonDTO pDTO) throws Exception {
+
+        log.info("{}.getSingerSong Start!", this.getClass().getName());
+
+        log.info("pDTO: {}", pDTO);
+
+        List<MelonDTO> rList = Optional.ofNullable(melonService.getSingerSong(pDTO)).orElseGet(ArrayList::new);
+
+        log.info("{}.getSingerSong End!", this.getClass().getName());
 
         return ResponseEntity.ok(
                 CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
