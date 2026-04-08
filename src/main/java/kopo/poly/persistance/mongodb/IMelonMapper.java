@@ -13,4 +13,8 @@ public interface IMelonMapper {
     List<MelonDTO> getSingerSongCnt(String colNm) throws Exception;
 
     List<MelonDTO> getSingerSong(String colNm, MelonDTO pDTO) throws Exception;
+
+    int dropCollection(String colNm) throws Exception;
+
+    int insertManyField(String colNm, List<MelonDTO> pList) throws Exception;
 }
