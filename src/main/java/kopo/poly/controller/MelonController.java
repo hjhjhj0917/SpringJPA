@@ -133,4 +133,21 @@ public class MelonController {
                 CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
         );
     }
+
+    @PostMapping(value = "updateField")
+    public ResponseEntity<CommonResponse<List<MelonDTO>>> updateField(@RequestBody MelonDTO pDTO) throws Exception {
+
+        log.info("{}.updateField Start!", this.getClass().getName());
+
+        log.info("pDTO: {}", pDTO);
+
+        List<MelonDTO> rList = Optional.ofNullable(melonService.updateField(pDTO))
+                .orElseGet(ArrayList::new);
+
+        log.info("{}.updateField End!", this.getClass().getName());
+
+        return ResponseEntity.ok(
+                CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
+        );
+    }
 }

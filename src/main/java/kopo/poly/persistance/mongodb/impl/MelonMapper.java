@@ -5,6 +5,7 @@ import com.mongodb.MongoException;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import kopo.poly.dto.MelonDTO;
 import kopo.poly.persistance.mongodb.AbstractMongoDBComon;
 import kopo.poly.persistance.mongodb.IMelonMapper;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import javax.print.Doc;
 import java.util.*;
+import java.util.logging.Filter;
 
 @Slf4j
 @Component
@@ -203,5 +205,66 @@ public class MelonMapper extends AbstractMongoDBComon implements IMelonMapper {
         log.info("{}.insertManyField End!", this.getClass().getName());
 
         return res;
+    }
+
+    @Override
+    public int updateField(String colNm, MelonDTO pDTO) throws Exception {
+
+        log.info("{}.updateField Start!", this.getClass().getName());
+
+        int res;
+
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
+
+        String singer = CmmUtil.nvl(pDTO.singer());
+        String updateSinger = CmmUtil.nvl(pDTO.updateSinger());
+
+        log.info("pDTO: {}", pDTO);
+
+        Document update = new Document("$set", new Document("singer", updateSinger));
+
+        col.updateMany(Filters.eq("singer", singer), update);
+
+        res = 1;
+
+        log.info("{}.updateField End!", this.getClass().getName());
+
+        return res;
+    }
+
+    @Override
+    public List<MelonDTO> getUpdateSinger(String colNm, MelonDTO pDTO) throws Exception {
+
+        log.info("{}.getUpdateSinger Start!", this.getClass().getName());
+
+        List<MelonDTO> rList = new LinkedList<>();
+
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
+
+        Document query = new Document();
+        query.append("singer", CmmUtil.nvl(pDTO.updateSinger()));
+
+        Document projection = new Document();
+        projection.append("song", "$song");
+        projection.append("singer", "$singer");
+        projection.append("_id", 0);
+
+        FindIterable<Document> rs = col.find(query).projection(projection);
+
+        for (Document doc : rs) {
+
+            String song = CmmUtil.nvl(doc.getString("song"));
+            String singer = CmmUtil.nvl(doc.getString("singer"));
+
+            log.info("song: {}, singer: {}", song, singer);
+
+            MelonDTO rDTO = MelonDTO.builder().song(song).singer(singer).build();
+
+            rList.add(rDTO);
+        }
+
+        log.info("{}.getUpdateSinger End!", this.getClass().getName());
+
+        return rList;
     }
 }

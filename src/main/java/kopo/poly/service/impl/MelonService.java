@@ -152,4 +152,27 @@ public class MelonService implements IMelonService {
 
         return rList;
     }
+
+    @Override
+    public List<MelonDTO> updateField(MelonDTO pDTO) throws Exception {
+
+        log.info("{}.updateField Start!", this.getClass().getName());
+
+        List<MelonDTO> rList = null;
+
+        String colNm = "MELON_" + DateUtil.getDateTime("yyyyMMdd");
+
+        melonMapper.dropCollection(colNm);
+
+        if (this.collectMelonSong() == 1) {
+            if (melonMapper.updateField(colNm, pDTO) == 1) {
+
+                rList = melonMapper.getUpdateSinger(colNm, pDTO);
+            }
+        }
+
+        log.info("{}.updateField End!", this.getClass().getName());
+
+        return rList;
+    }
 }
