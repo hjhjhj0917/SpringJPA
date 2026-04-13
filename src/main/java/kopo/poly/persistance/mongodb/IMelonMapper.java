@@ -21,4 +21,8 @@ public interface IMelonMapper {
     int updateField(String colNm, MelonDTO pDTO) throws Exception;
 
     List<MelonDTO> getUpdateSinger(String colNm, MelonDTO pDTO) throws Exception;
+
+    int updateAddField(String colNm, MelonDTO pDTO) throws Exception;
+
+    List<MelonDTO> getSingerSongNickname(String colNm, MelonDTO pDTO) throws Exception;
 }

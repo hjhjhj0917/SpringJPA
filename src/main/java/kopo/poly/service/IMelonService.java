@@ -19,4 +19,6 @@ public interface IMelonService {
     List<MelonDTO> insertManyField() throws Exception;
 
     List<MelonDTO> updateField(MelonDTO pDTO) throws Exception;
+
+    List<MelonDTO> updateAddField(MelonDTO pDTO) throws Exception;
 }

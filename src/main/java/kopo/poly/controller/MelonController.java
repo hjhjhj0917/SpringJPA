@@ -8,6 +8,7 @@ import kopo.poly.service.IMelonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -145,6 +146,23 @@ public class MelonController {
                 .orElseGet(ArrayList::new);
 
         log.info("{}.updateField End!", this.getClass().getName());
+
+        return ResponseEntity.ok(
+                CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
+        );
+    }
+
+    @PostMapping(value = "updateAddField")
+    public ResponseEntity<CommonResponse<List<MelonDTO>>> updateAddField(@RequestBody MelonDTO pDTO) throws Exception {
+
+        log.info("{}.updateAddField Start!", this.getClass().getName());
+
+        log.info("pDTO: {}", pDTO);
+
+        List<MelonDTO> rList = Optional.ofNullable(melonService.updateAddField(pDTO))
+                .orElseGet(ArrayList::new);
+
+        log.info("{}.updateAddField End!", this.getClass().getName());
 
         return ResponseEntity.ok(
                 CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
