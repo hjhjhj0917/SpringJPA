@@ -16,7 +16,7 @@
                 $("#memberData").append("<input type=\"button\" class=\"btnRemove\" value=\"Remove\"> ");
                 $("#memberData").append("<br/>");
 
-                $("#btnRemove").on("click", function () {
+                $(".btnRemove").on("click", function () {
                     $(this).prev().remove();
                     $(this).next().remove();
                     $(this).remove();

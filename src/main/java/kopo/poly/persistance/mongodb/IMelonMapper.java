@@ -26,7 +26,9 @@ public interface IMelonMapper {
 
     List<MelonDTO> getSingerSongNickname(String colNm, MelonDTO pDTO) throws Exception;
 
+    // 가수의 List 구조의 Member 필드 추가하기
     int updateAddListField(String colNm, MelonDTO pDTO) throws Exception;
 
+    // 가수의 노래 가져오기
     List<MelonDTO> getSingerSongMember(String colNm, MelonDTO pDTO) throws Exception;
 }
