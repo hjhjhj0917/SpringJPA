@@ -185,4 +185,38 @@ public class MelonController {
                 CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
         );
     }
+
+    @PostMapping(value = "updateFieldAndAddField")
+    public ResponseEntity<CommonResponse<List<MelonDTO>>> updateFieldAndAddField(@RequestBody MelonDTO pDTO) throws Exception {
+
+        log.info("{}.updateFieldAndAddField Start!", this.getClass().getName());
+
+        log.info("pDTO: {}", pDTO);
+
+        List<MelonDTO> rList = Optional.ofNullable(melonService.updateFieldAndAddField(pDTO))
+                .orElseGet(ArrayList::new);
+
+        log.info("{}.updateFieldAndAddField End!", this.getClass().getName());
+
+        return ResponseEntity.ok(
+                CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
+        );
+    }
+
+    @PostMapping(value = "deleteDocument")
+    public ResponseEntity<CommonResponse<List<MelonDTO>>> deleteDocument(@RequestBody MelonDTO pDTO) throws Exception {
+
+        log.info("{}.deleteDocument Start!", this.getClass().getName());
+
+        log.info("pDTO: {}", pDTO);
+
+        List<MelonDTO> rList = Optional.ofNullable(melonService.deleteDocument(pDTO))
+                .orElseGet(ArrayList::new);
+
+        log.info("{}.deleteDocument End!", this.getClass().getName());
+
+        return ResponseEntity.ok(
+                CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
+        );
+    }
 }

@@ -396,4 +396,94 @@ public class MelonMapper extends AbstractMongoDBComon implements IMelonMapper {
 
         return rList;
     }
+
+    @Override
+    public int updateFieldAndAddField(String colNm, MelonDTO pDTO) throws Exception {
+
+        log.info("{}.updateFieldAndAddField Start!", this.getClass().getName());
+
+        int res;
+
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
+
+        String singer = CmmUtil.nvl(pDTO.singer());
+        String updateSinger = CmmUtil.nvl(pDTO.updateSinger());
+        String addFieldValue = CmmUtil.nvl(pDTO.addFieldValue());
+
+        log.info("pColNm: {}", colNm);
+        log.info("pDTO: {}", pDTO);
+
+        Document update = new Document("$set", new Document("singer", updateSinger)
+                .append("addData", addFieldValue));
+
+        col.updateMany(Filters.eq("singer", singer), update);
+
+        res = 1;
+
+        log.info("{}.updateFieldAndAddField End!", this.getClass().getName());
+
+        return res;
+    }
+
+    @Override
+    public List<MelonDTO> getSingerSongAddDate(String colNm, MelonDTO pDTO) throws Exception {
+
+        log.info("{}.getSingerSongAddDate Start!", this.getClass().getName());
+
+        List<MelonDTO> rList = new LinkedList<>();
+
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
+
+        Document query = new Document();
+        query.append("singer", CmmUtil.nvl(pDTO.updateSinger()));
+
+        Document projection = new Document();
+        projection.append("song", "$song");
+        projection.append("singer", "$singer");
+        projection.append("addData", "$addData");
+
+        projection.append("_id", 0);
+
+        FindIterable<Document> rs = col.find(query).projection(projection);
+
+        for (Document doc : rs) {
+
+            String song = CmmUtil.nvl(doc.getString("song"));
+            String singer = CmmUtil.nvl(doc.getString("singer"));
+            String addData = CmmUtil.nvl(doc.getString("addData"));
+
+            log.info("song: {}/ singer: {}/ addData: {}", song, singer, addData);
+
+            MelonDTO rDTO = MelonDTO.builder().song(song).singer(singer).addFieldValue(addData).build();
+
+            rList.add(rDTO);
+        }
+
+        log.info("{}.getSingerSongAddDate End!", this.getClass().getName());
+
+        return rList;
+    }
+
+    @Override
+    public int deleteDocument(String colNm, MelonDTO pDTO) throws Exception {
+
+        log.info("{}.deleteDocument Start!", this.getClass().getName());
+
+        int res;
+
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
+
+        String singer = CmmUtil.nvl(pDTO.singer());
+
+        log.info("pColNm: {}", colNm);
+        log.info("pDTO: {}", pDTO);
+
+        col.deleteMany(Filters.eq("singer", singer));
+
+        res = 1;
+
+        log.info("{}.deleteDocument End!", this.getClass().getName());
+
+        return res;
+    }
 }

@@ -23,4 +23,10 @@ public interface IMelonService {
     List<MelonDTO> updateAddField(MelonDTO pDTO) throws Exception;
 
     List<MelonDTO> updateAddListField(MelonDTO pDTO) throws Exception;
+
+    // 가수 이름 수정 및 addData 필드 추가하기
+    List<MelonDTO> updateFieldAndAddField(MelonDTO pDTO) throws Exception;
+
+    // 노래 삭제하기
+    List<MelonDTO> deleteDocument(MelonDTO pDTO) throws Exception;
 }

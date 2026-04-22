@@ -31,4 +31,13 @@ public interface IMelonMapper {
 
     // 가수의 노래 가져오기
     List<MelonDTO> getSingerSongMember(String colNm, MelonDTO pDTO) throws Exception;
+
+    // 가수 이름, 노래 제목 수정 및 신규 필드 추가(복합 수정하기)
+    int updateFieldAndAddField(String colNm, MelonDTO pDTO) throws Exception;
+
+    // 가수의 노래 가져오기(임의 추가한 필드 포함 조회)
+    List<MelonDTO> getSingerSongAddDate(String colNm, MelonDTO pDTO) throws Exception;
+
+    // 가수의 노래 삭제하기
+    int deleteDocument(String colNm, MelonDTO pDTO) throws Exception;
 }

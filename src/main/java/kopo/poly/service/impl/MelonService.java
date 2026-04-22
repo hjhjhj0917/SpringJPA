@@ -219,4 +219,50 @@ public class MelonService implements IMelonService {
 
         return rList;
     }
+
+    @Override
+    public List<MelonDTO> updateFieldAndAddField(MelonDTO pDTO) throws Exception {
+
+        log.info("{}.updateFieldAndAddField Start!", this.getClass().getName());
+
+        List<MelonDTO> rList = null;
+
+        String colNm = "MELON_" + DateUtil.getDateTime("yyyyMMdd");
+
+        melonMapper.dropCollection(colNm);
+
+        if (this.collectMelonSong() == 1) {
+            if (melonMapper.updateFieldAndAddField(colNm, pDTO) == 1) {
+
+                rList = melonMapper.getSingerSongAddDate(colNm, pDTO);
+            }
+        }
+
+        log.info("{}.updateFieldAndAddField End!", this.getClass().getName());
+
+        return rList;
+    }
+
+    @Override
+    public List<MelonDTO> deleteDocument(MelonDTO pDTO) throws Exception {
+
+        log.info("{}.deleteDocument Start!", this.getClass().getName());
+
+        List<MelonDTO> rList = null;
+
+        String colNm = "MELON_" + DateUtil.getDateTime("yyyyMMdd");
+
+        melonMapper.dropCollection(colNm);
+
+        if (this.collectMelonSong() == 1) {
+            if (melonMapper.deleteDocument(colNm, pDTO) == 1) {
+
+                rList = melonMapper.getSongList(colNm);
+            }
+        }
+
+        log.info("{}.deleteDocument End!", this.getClass().getName());
+
+        return rList;
+    }
 }
