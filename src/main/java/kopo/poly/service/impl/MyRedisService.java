@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -15,25 +17,71 @@ public class MyRedisService implements IMyRedisService {
     private final IMyRedisMapper myRedisMapper;
 
     @Override
-    public RedisDTO saveString(RedisDTO pDTO) throws Exception {
+    public RedisDTO saveStringJSON(RedisDTO pDTO) throws Exception {
 
-        log.info("{}.saveString Start!", this.getClass().getName());
+        log.info("{}.saveStringJSON Start!", this.getClass().getName());
 
         String redisKey = "myRedis_String";
 
         RedisDTO rDTO;
 
-        int res = myRedisMapper.saveString(redisKey, pDTO);
+        int res = myRedisMapper.saveStringJSON(redisKey, pDTO);
 
         if (res == 1) {
-            rDTO = myRedisMapper.getString(redisKey);
+            rDTO = myRedisMapper.getStringJSON(redisKey);
         } else {
             log.info("Redis 저장 실패!!");
             throw new Exception("Redis 저장 실패!!");
         }
 
-        log.info("{}.saveString Start!", this.getClass().getName());
+        log.info("{}.saveStringJSON Start!", this.getClass().getName());
 
         return rDTO;
+    }
+
+    @Override
+    public List<String> saveList(List<RedisDTO> pList) throws Exception {
+
+        log.info("{}.saveList Start!", this.getClass().getName());
+
+        String redisKey = "myRedis_List";
+
+        List<String> rList;
+
+        int res = myRedisMapper.saveList(redisKey, pList);
+
+        if (res == 1) {
+            rList = myRedisMapper.getList(redisKey);
+        } else {
+            log.info("Redis 저장 실패!!");
+            throw new Exception("Reids 저장 실패!!");
+        }
+
+        log.info("{}.saveList End!", this.getClass().getName());
+
+        return rList;
+    }
+
+    @Override
+    public List<RedisDTO> saveListJSON(List<RedisDTO> pList) throws Exception {
+
+        log.info("{}.saveListJSON Start!", this.getClass().getName());
+
+        String redisKey = "myRedis_List_JSON";
+
+        List<RedisDTO> rList;
+
+        int res = myRedisMapper.saveListJSON(redisKey, pList);
+
+        if (res == 1) {
+            rList = myRedisMapper.getListJSON(redisKey);
+        } else {
+            log.info("Redis 저장 실패!!");
+            throw new Exception("Redis 저장 실패!!");
+        }
+
+        log.info("{}.saveListJSON End!", this.getClass().getName());
+
+        return rList;
     }
 }
