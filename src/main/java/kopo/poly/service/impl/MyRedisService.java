@@ -84,4 +84,27 @@ public class MyRedisService implements IMyRedisService {
 
         return rList;
     }
+
+    @Override
+    public RedisDTO saveHash(RedisDTO pDTO) throws Exception {
+
+        log.info("{}.saveHash Start!", this.getClass().getName());
+
+        String redisKey = "myRedis_Hash";
+
+        RedisDTO rDTO;
+
+        int res = myRedisMapper.saveHash(redisKey, pDTO);
+
+        if (res == 1) {
+            rDTO = myRedisMapper.getHash(redisKey);
+        } else {
+            log.info("Redis 저장 실패!!");
+            throw new Exception("Redis 저장 실패!!");
+        }
+
+        log.info("{}.saveHash End!", this.getClass().getName());
+
+        return rDTO;
+    }
 }

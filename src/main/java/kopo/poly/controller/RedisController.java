@@ -74,4 +74,21 @@ public class RedisController {
                 CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rList)
         );
     }
+
+    @PostMapping(value = "saveHash")
+    public ResponseEntity<CommonResponse<RedisDTO>> saveHash(@RequestBody RedisDTO pDTO) throws Exception {
+
+        log.info("{}.saveHash Start!", this.getClass().getName());
+
+        log.info("pDTO: {}", pDTO);
+
+        RedisDTO rDTO = Optional.ofNullable(myRedisService.saveHash(pDTO))
+                .orElseGet(() -> RedisDTO.builder().build());
+
+        log.info("{}.saveHash End!", this.getClass().getName());
+
+        return ResponseEntity.ok(
+                CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rDTO)
+        );
+    }
 }

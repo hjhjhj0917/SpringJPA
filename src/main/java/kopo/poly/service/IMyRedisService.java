@@ -11,4 +11,6 @@ public interface IMyRedisService {
     List<String> saveList(List<RedisDTO> pList) throws Exception;
 
     List<RedisDTO> saveListJSON(List<RedisDTO> pList) throws Exception;
+
+    RedisDTO saveHash(RedisDTO pDTO) throws Exception;
 }

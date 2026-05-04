@@ -156,4 +156,57 @@ public class MyRedisMapper implements IMyRedisMapper {
 
         return rList;
     }
+
+    @Override
+    public int saveHash(String redisKey, RedisDTO pDTO) throws DataAccessException {
+
+        log.info("{}.saveHash Start!", this.getClass().getName());
+
+        int res;
+
+        redisDB.setKeySerializer(new StringRedisSerializer());
+        redisDB.setHashKeySerializer(new StringRedisSerializer());
+        redisDB.setHashValueSerializer(new StringRedisSerializer());
+
+        this.deleteRedisKey(redisKey);
+
+        redisDB.opsForHash().put(redisKey, "name", CmmUtil.nvl(pDTO.name()));
+        redisDB.opsForHash().put(redisKey, "email", CmmUtil.nvl(pDTO.email()));
+        redisDB.opsForHash().put(redisKey, "addr", CmmUtil.nvl(pDTO.addr()));
+
+        res = 1;
+
+        log.info("{}.saveHash End!", this.getClass().getName());
+
+        return res;
+    }
+
+    @Override
+    public RedisDTO getHash(String redisKey) throws DataAccessException {
+
+        log.info("{}.getHash Start!", this.getClass().getName());
+
+        RedisDTO rDTO = null;
+
+        redisDB.setKeySerializer(new StringRedisSerializer());
+        redisDB.setHashKeySerializer(new StringRedisSerializer());
+        redisDB.setHashValueSerializer(new StringRedisSerializer());
+
+        if (Boolean.TRUE.equals(redisDB.hasKey(redisKey))) {
+
+            String name = CmmUtil.nvl((String) redisDB.opsForHash().get(redisKey, "name"));
+            String email = CmmUtil.nvl((String) redisDB.opsForHash().get(redisKey, "email"));
+            String addr = CmmUtil.nvl((String) redisDB.opsForHash().get(redisKey, "addr"));
+
+            log.info("name: {}", name);
+            log.info("email: {}", email);
+            log.info("addr: {}", addr);
+
+            rDTO = RedisDTO.builder().name(name).email(email).addr(addr).build();
+        }
+
+        log.info("{}.getHash End!", this.getClass().getName());
+
+        return rDTO;
+    }
 }
