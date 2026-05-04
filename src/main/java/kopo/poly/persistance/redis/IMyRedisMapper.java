@@ -1,7 +1,6 @@
 package kopo.poly.persistance.redis;
 
 import kopo.poly.dto.RedisDTO;
-import org.ehcache.spi.resilience.ResilienceStrategy;
 
 import java.util.List;
 
