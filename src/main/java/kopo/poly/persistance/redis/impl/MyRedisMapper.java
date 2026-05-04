@@ -12,6 +12,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -208,5 +209,35 @@ public class MyRedisMapper implements IMyRedisMapper {
         log.info("{}.getHash End!", this.getClass().getName());
 
         return rDTO;
+    }
+
+    @Override
+    public int saveSetJSON(String redisKey, List<RedisDTO> pList) throws DataAccessException {
+
+        log.info("{}.saveSetJSON Start!", this.getClass().getName());
+
+        int res;
+
+        redisDB.setKeySerializer(new StringRedisSerializer());
+        redisDB.setValueSerializer(new Jackson2JsonRedisSerializer<>(RedisDTO.class));
+
+        this.deleteRedisKey(redisKey);
+
+        log.info("입력받은 데이터 수: {}", pList.size());
+
+        pList.forEach(dto -> redisDB.opsForSet().add(redisKey, dto));
+
+        redisDB.expire(redisKey, 5, TimeUnit.HOURS);
+
+        res = 1;
+
+        log.info("{}.saveSetJSON End!", this.getClass().getName());
+
+        return res;
+    }
+
+    @Override
+    public Set<RedisDTO> getSetJSON(String redisKey) throws Exception {
+        return Set.of();
     }
 }

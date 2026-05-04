@@ -3,6 +3,7 @@ package kopo.poly.persistance.redis;
 import kopo.poly.dto.RedisDTO;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IMyRedisMapper {
 
@@ -21,4 +22,8 @@ public interface IMyRedisMapper {
     int saveHash(String redisKey, RedisDTO pDTO) throws Exception;
 
     RedisDTO getHash(String redisKey) throws Exception;
+
+    int saveSetJSON(String redisKey, List<RedisDTO> pList) throws Exception;
+
+    Set<RedisDTO> getSetJSON(String redisKey) throws Exception;
 }
