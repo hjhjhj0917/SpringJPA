@@ -7,14 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RequestMapping(value = "/redis/v1")
@@ -89,6 +84,23 @@ public class RedisController {
 
         return ResponseEntity.ok(
                 CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rDTO)
+        );
+    }
+
+    @PostMapping(value = "saveSetJSON")
+    public ResponseEntity<CommonResponse<Set<RedisDTO>>> saveSetJSON(@RequestBody List<RedisDTO> pList) throws Exception {
+
+        log.info("{}.saveHash Start!", this.getClass().getName());
+
+        log.info("pList: {}", pList);
+
+        Set<RedisDTO> rSet = Optional.ofNullable(myRedisService.saveSetJSON(pList))
+                .orElseGet(HashSet::new);
+
+        log.info("{}.saveHash Start!", this.getClass().getName());
+
+        return ResponseEntity.ok(
+                CommonResponse.of(HttpStatus.OK, HttpStatus.OK.series().name(), rSet)
         );
     }
 }

@@ -11,6 +11,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -56,6 +58,7 @@ public class MelonService implements IMelonService {
         return pList;
     }
 
+    @CacheEvict(cacheNames = "melonSongs", keyGenerator = "melonKeyGen")
     @Override
     public int collectMelonSong() throws Exception {
 
@@ -74,6 +77,7 @@ public class MelonService implements IMelonService {
         return res;
     }
 
+    @Cacheable(cacheNames = "melonSongs", keyGenerator = "melonKeyGen", sync = true)
     @Override
     public List<MelonDTO> getSongList() throws Exception {
 

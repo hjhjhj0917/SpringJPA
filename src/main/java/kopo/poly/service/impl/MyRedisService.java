@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -106,5 +107,28 @@ public class MyRedisService implements IMyRedisService {
         log.info("{}.saveHash End!", this.getClass().getName());
 
         return rDTO;
+    }
+
+    @Override
+    public Set<RedisDTO> saveSetJSON(List<RedisDTO> pList) throws Exception {
+
+        log.info("{}.saveSetJSON Start!", this.getClass().getName());
+
+        String redisKey = "myRedis_Set_JSON";
+
+        Set<RedisDTO> rSet;
+
+        int res = myRedisMapper.saveSetJSON(redisKey, pList);
+
+        if (res == 1) {
+            rSet = myRedisMapper.getSetJSON(redisKey);
+        } else {
+            log.info("Redis 저장 실패!");
+            throw new Exception("Reids 저장 실패!!");
+        }
+
+        log.info("{}.saveSetJSON End!", this.getClass().getName());
+
+        return rSet;
     }
 }

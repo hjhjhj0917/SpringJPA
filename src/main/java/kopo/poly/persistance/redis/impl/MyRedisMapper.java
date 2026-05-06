@@ -237,7 +237,21 @@ public class MyRedisMapper implements IMyRedisMapper {
     }
 
     @Override
-    public Set<RedisDTO> getSetJSON(String redisKey) throws Exception {
-        return Set.of();
+    public Set<RedisDTO> getSetJSON(String redisKey) throws DataAccessException {
+
+        log.info("{}.getSetJSON Start!", this.getClass().getName());
+
+        Set<RedisDTO> rSet = null;
+
+        redisDB.setKeySerializer(new StringRedisSerializer());
+        redisDB.setValueSerializer(new Jackson2JsonRedisSerializer<>(RedisDTO.class));
+
+        if (Boolean.TRUE.equals(redisDB.hasKey(redisKey))) {
+            rSet = (Set) redisDB.opsForSet().members(redisKey);
+        }
+
+        log.info("{}.getSetJSON End!", this.getClass().getName());
+
+        return rSet;
     }
 }
