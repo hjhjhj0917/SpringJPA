@@ -15,7 +15,7 @@ Spring Boot를 기반으로 다양한 데이터베이스(JPA/MariaDB, MongoDB, R
 
 ---
 
-## 💡 Key Features
+## Key Features
 
 ### 1. 관계형 데이터베이스 처리 (JPA & QueryDSL)
 - **공지사항 및 회원 관리 (`NoticeController`, `UserInfoController`)**
